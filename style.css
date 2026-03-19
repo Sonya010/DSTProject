@@ -194,3 +194,14 @@ tr:first-child:hover {
     font-size: 3em;
     letter-spacing: 5px;
 }
+
+.content-column > ol {
+    border-left: 3px solid #2f4f4f;
+    background-color: rgba(47, 79, 79, 0.05);
+}
+
+h1 + h2 {
+    margin-top: -20px;
+    font-style: italic;
+    color: #4a7676;
+}

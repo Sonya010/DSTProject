@@ -80,5 +80,49 @@
     Warning: Night is approaching!
 </div>
 
+<script src="script.js"></script>
+
+<script>
+    if (!sessionStorage.getItem('dialogueShown')) {
+    startSurvivalDialogue();
+    sessionStorage.setItem('dialogueShown', 'true');
+}
+    compareMonsterDanger("Deerclops", "Spider");
+    showDeveloperInfo("Kozachenko", "Sofiia");
+    activateNightCycle();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const logo = document.getElementById("main-title-logo");
+        const allListItems = document.querySelectorAll("ul li");
+
+        if (logo) {
+            logo.innerHTML = "Survival Guide: The Constant"; 
+        }
+        
+        const charlieWarning = document.createElement("div");
+        charlieWarning.style.cssText = "color: #8b0000; text-align: center; font-weight: bold; margin: 10px;";
+        
+        const warningText = document.createTextNode("Warning: Charlie is hiding in the shadows...");
+        charlieWarning.append(warningText);
+        
+        const nav = document.querySelector(".nav-bar");
+        nav.after(charlieWarning); 
+
+        const newGoal = document.createElement("li");
+        newGoal.innerHTML = "<b>Day 0:</b> Don't let the fire go out!";
+        const goalList = document.querySelector("ul");
+        goalList.prepend(newGoal);
+
+
+        setTimeout(() => {
+            const oldWarning = document.querySelector(".fixed-night-warning");
+            if (oldWarning) {
+                oldWarning.remove();
+            }
+        }, 5000);
+    });
+
+    function runAway() { location.href = "https://www.klei.com/games/dont-starve-together"; }
+</script>
 </body>
 </html>

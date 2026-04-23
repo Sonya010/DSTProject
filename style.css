@@ -208,6 +208,8 @@ tr:first-child:hover {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     font-size: 3em;
     letter-spacing: 5px;
+    user-select: none; 
+    -webkit-user-select: none;
 }
 
 .content-column > ol {

@@ -51,6 +51,21 @@
         <li><b>Day 11-20:</b> Prepare for Winter by crafting warm clothing and storing food.</li>
     </ul>
 
+    <div class="info-card" style="border: 3px dashed #8b0000; background-color: rgba(242, 237, 228, 0.9);">
+        <h2>Interactive living</h2>
+        <p>Hover over resources to see information. Drag the <b>Log</b> into the <b>Campfire</b> to light it!</p>
+
+        <div id="inventory-container" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+            <div class="inv-item" style="padding: 15px; border: 2px solid #2f4f4f; background: #eadec8; border-radius: 8px; cursor: pointer; transition: 0.3s;">🪨 Flint</div>
+            <div class="inv-item" style="padding: 15px; border: 2px solid #2f4f4f; background: #eadec8; border-radius: 8px; cursor: pointer; transition: 0.3s;">🌿 Twigs</div>
+            <div class="inv-item" id="draggable-log" style="padding: 15px; border: 2px solid #2f4f4f; background: #8b4513; color: white; border-radius: 8px; cursor: grab; user-select: none;">🪵 Log</div>
+        </div>
+
+        <div id="campfire" style="width: 150px; height: 150px; margin: 0 auto; background: #2A3439; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #eadec8; font-weight: bold; border: 5px solid #2f4f4f; transition: all 0.5s; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+            🔥 Campfire
+        </div>
+    </div>
+
     <h3>Game Statistics Definition:</h3>
     <dl>
         <dt>Health</dt>

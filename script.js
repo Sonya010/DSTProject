@@ -128,4 +128,102 @@ window.addEventListener('DOMContentLoaded', () => {
             document.body.style.filter = document.body.style.filter === 'brightness(0.6)' ? 'none' : 'brightness(0.6)';
         }
     });
+
+    const inventoryContainer = document.getElementById('inventory-container');
+
+    if (inventoryContainer) {
+        inventoryContainer.addEventListener('mouseover', (event) => {
+            const target = event.target.closest('.inv-item');
+            const related = event.relatedTarget;
+
+            if (target && (!related || !target.contains(related))) {
+                target.style.backgroundColor = '#d3cec4';
+                target.style.transform = 'scale(1.1)';
+                target.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+            }
+        });
+
+        inventoryContainer.addEventListener('mouseout', (event) => {
+            const target = event.target.closest('.inv-item');
+            const related = event.relatedTarget;
+
+            if (target && (!related || !target.contains(related))) {
+                target.style.backgroundColor = target.id === 'draggable-log' ? '#8b4513' : '#eadec8';
+                target.style.transform = 'scale(1)';
+                target.style.boxShadow = 'none';
+            }
+        });
+    }
+
+    const logItem = document.getElementById('draggable-log');
+    const campfire = document.getElementById('campfire');
+
+    if (logItem && campfire) {
+        let isDragging = false;
+        let shiftX, shiftY;
+
+        logItem.addEventListener('mousedown', (event) => {
+            if (event.button !== 0) return; 
+
+            isDragging = true;
+            const rect = logItem.getBoundingClientRect();
+            shiftX = event.clientX - rect.left;
+            shiftY = event.clientY - rect.top;
+
+            logItem.style.position = 'absolute';
+            logItem.style.zIndex = 1000;
+            logItem.style.cursor = 'grabbing';
+            
+            document.body.append(logItem);
+            moveAt(event.pageX, event.pageY);
+        });
+
+        function moveAt(pageX, pageY) {
+            logItem.style.left = pageX - shiftX + 'px';
+            logItem.style.top = pageY - shiftY + 'px';
+        }
+
+        function onMouseMove(event) {
+            if (!isDragging) return;
+            moveAt(event.pageX, event.pageY);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        document.addEventListener('mouseup', (event) => {
+            if (!isDragging) return;
+            isDragging = false;
+            logItem.style.cursor = 'grab';
+
+            logItem.hidden = true; 
+            let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+            logItem.hidden = false;
+
+            let droppedOnCampfire = elemBelow ? elemBelow.closest('#campfire') : null;
+
+            if (droppedOnCampfire) {
+                campfire.style.backgroundColor = '#ff4500';
+                campfire.style.boxShadow = '0 0 30px #ff0000, 0 0 60px #ff4500';
+                campfire.style.transform = 'scale(1.1)';
+                campfire.innerHTML = '🔥 MAXIMUM FLAME!';
+                
+                setTimeout(() => {
+                    campfire.style.backgroundColor = '#2A3439';
+                    campfire.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+                    campfire.style.transform = 'scale(1)';
+                    campfire.innerHTML = '🔥 Campfire';
+                }, 2000);
+            }
+
+            resetLogPosition();
+        });
+
+        function resetLogPosition() {
+            logItem.style.position = 'static';
+            logItem.style.zIndex = 'auto';
+            if (inventoryContainer) inventoryContainer.append(logItem); 
+        }
+        
+        logItem.ondragstart = () => false;
+    }
 });
